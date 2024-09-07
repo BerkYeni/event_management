@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}{{ event.title }} - Event Management System{% endblock %}
+
+{% block content %}
+<div class="bg-white rounded-lg shadow-md overflow-hidden">
+    <div class="p-6">
+        <h1 class="text-3xl font-bold mb-4">{{ event.title }}</h1>
+        <p class="text-gray-600 mb-4">{{ event.description }}</p>
+        <p class="text-sm text-gray-500 mb-2"><strong>Date:</strong> {{ event.date.strftime('%Y-%m-%d %H:%M') }}</p>
+        <p class="text-sm text-gray-500 mb-4"><strong>Location:</strong> {{ event.location }}</p>
+        <p class="text-sm text-gray-500 mb-4"><strong>Organizer:</strong> {{ event.organizer.username }}</p>
+        
+        {% if current_user == event.organizer %}
+        <a href="{{ url_for('main.manage_attendees', event_id=event.id) }}" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 mr-2">Manage Attendees</a>
+        {% endif %}
+        
+        <a href="{{ url_for('main.register_for_event', id=event.id) }}" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Register for Event</a>
+    </div>
+</div>
+{% endblock %}
